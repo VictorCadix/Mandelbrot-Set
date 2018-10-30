@@ -1,4 +1,8 @@
-
+int lastMouse_x;
+int lastMouse_y;
+int dMouse_x;
+int dMouse_y;
+boolean last_pressed;
 
 void setup() {
   size(800, 800);
@@ -47,6 +51,21 @@ void draw() {
   }
 
   updatePixels();
+  
+  
+  //pan
+  if (mousePressed == true){
+    if (last_pressed == false){
+      lastMouse_x = mouseX;
+      lastMouse_y = mouseY;
+    }else{
+      dMouse_x = lastMouse_x - mouseX;
+      dMouse_y = lastMouse_y - mouseY;
+    }
+    last_pressed = true;
+  }else{
+    last_pressed = false;
+  }
 }
 
 class Point {
