@@ -26,8 +26,8 @@ void draw() {
   println(dMouse_x);
   println(dMouse_y);
   
-  center_x = center_x + dMouse_x*zoom/width;
-  center_y = center_y - dMouse_y*zoom/height;
+  center_x = center_x + dMouse_x*zoom*2/width;
+  center_y = center_y - dMouse_y*zoom*2/height;
   println(center_x + " / " + center_y);
 
   for (int i = 0; i < pixels.length; i++) {
@@ -70,13 +70,12 @@ void draw() {
   
   //pan
   if (mousePressed == true){
-    if (last_pressed == false){
-      lastMouse_x = mouseX;
-      lastMouse_y = mouseY;
-    }else{
+    if (last_pressed == true){
       dMouse_x = lastMouse_x - mouseX;
       dMouse_y = lastMouse_y - mouseY;
     }
+    lastMouse_x = mouseX;
+    lastMouse_y = mouseY;
     last_pressed = true;
   }else{
     last_pressed = false;
