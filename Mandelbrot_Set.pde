@@ -2,7 +2,11 @@
 
 void setup() {
   size(800, 800);
-  loadPixels();  
+  
+}
+
+void draw() {
+  loadPixels();
   //arrange the pixels
   Point pixel;
   pixel = new Point();
@@ -43,9 +47,6 @@ void setup() {
   }
 
   updatePixels();
-}
-
-void draw() {
 }
 
 class Point {
