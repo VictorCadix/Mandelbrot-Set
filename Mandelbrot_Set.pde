@@ -4,6 +4,9 @@ float dMouse_x = 0;
 float dMouse_y = 0;
 boolean last_pressed;
 long last_time = 0;
+float center_x = -0.7;
+float center_y = 0;
+float zoom = 2;
 
 void setup() {
   size(300, 300);
@@ -22,11 +25,16 @@ void draw() {
   color pColor;
   println(dMouse_x);
   println(dMouse_y);
+  
+  center_x = center_x + dMouse_x*zoom/width;
+  center_y = center_y - dMouse_y*zoom/height;
+  println(center_x + " / " + center_y);
 
   for (int i = 0; i < pixels.length; i++) {
     pixel = getPos(i, width, height);
-    float a = map(pixel.x, 0, width, -3+dMouse_x/100, 1+dMouse_x/100);
-    float b = map(pixel.y, 0, height, -2+dMouse_y/100, 2+dMouse_y/100);
+   
+    float a = map(pixel.x, 0, width, center_x-zoom, center_x+zoom);
+    float b = map(pixel.y, 0, height, center_y+zoom, center_y-zoom);
     
     ComplexNum c;
     c = new ComplexNum(a,b);
@@ -72,6 +80,8 @@ void draw() {
     last_pressed = true;
   }else{
     last_pressed = false;
+    dMouse_x = 0;
+    dMouse_y = 0;
   }
 }
 
@@ -106,4 +116,11 @@ Point getPos(int index, int _width, int _height) {
   p.x = index % _width;
 
   return p;
+}
+
+void mousePressed(){
+  if (mouseButton == 39){
+    center_x = 0;
+    center_y = 0;
+  }
 }
