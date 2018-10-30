@@ -1,7 +1,7 @@
 
 
 void setup() {
-  size(600, 600);
+  size(800, 800);
   loadPixels();  
   //arrange the pixels
   Point pixel;
@@ -10,25 +10,26 @@ void setup() {
 
   for (int i = 0; i < pixels.length; i++) {
     pixel = getPos(i, width, height);
-    float a = map(pixel.x, 0, width, -2, 2);
+    float a = map(pixel.x, 0, width, -3, 1);
     float b = map(pixel.y, 0, width, -2, 2);
-    
-    // z(1) = z(0)² + c
     
     ComplexNum c;
     c = new ComplexNum(a,b);
-
     ComplexNum z;
     z = new ComplexNum(0,0);
     
+    // z(1) = z(0)² + c
+    
     for (int j = 0; j < 100; j++) {
-      z.imag = ;
       //real part a²-b²
-      float real = a*a - b*b;
+      float real = z.real * z.real - z.imag * z.imag + a;
       //imaginary (2ab)i
-      float imag = 2*a*b;
+      float imag = 2 * z.real * z.imag + b;
+      z.real = real;
+      z.imag = imag;
+      
       //modulus
-      float modulus = sqrt(real+ + imag);
+      float modulus = sqrt(z.real*z.real + z.imag*z.imag);
       
       if (modulus < 100){
         pColor = color(0);
@@ -59,6 +60,11 @@ class ComplexNum {
   ComplexNum(float r, float i){
     this.real = r;
     this.imag = i;
+  }
+  
+  ComplexNum(ComplexNum c){
+    this.real = c.real;
+    this.imag = c.imag;
   }
   float modulus(){
     float mod = sqrt(real*real + imag*imag);
