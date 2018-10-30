@@ -123,3 +123,12 @@ void mousePressed(){
     center_y = 0;
   }
 }
+
+void mouseWheel(MouseEvent event) {
+  float e = event.getCount();
+  if (e > 0){
+    zoom = zoom*1.1;
+  }else{
+    zoom = zoom*0.9;
+  }
+}
