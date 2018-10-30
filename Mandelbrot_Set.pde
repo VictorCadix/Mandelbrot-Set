@@ -1,15 +1,20 @@
 int lastMouse_x;
 int lastMouse_y;
-int dMouse_x = 0;
-int dMouse_y = 0;
+float dMouse_x = 0;
+float dMouse_y = 0;
 boolean last_pressed;
+long last_time = 0;
 
 void setup() {
-  size(400, 400);
+  size(300, 300);
   
 }
 
 void draw() {
+  long time = millis() - last_time;
+  last_time = millis();
+  println("Time: " + time + " ms");
+  
   loadPixels();
   //arrange the pixels
   Point pixel;
