@@ -1,11 +1,11 @@
 int lastMouse_x;
 int lastMouse_y;
-int dMouse_x;
-int dMouse_y;
+int dMouse_x = 0;
+int dMouse_y = 0;
 boolean last_pressed;
 
 void setup() {
-  size(800, 800);
+  size(400, 400);
   
 }
 
@@ -15,11 +15,13 @@ void draw() {
   Point pixel;
   pixel = new Point();
   color pColor;
+  println(dMouse_x);
+  println(dMouse_y);
 
   for (int i = 0; i < pixels.length; i++) {
     pixel = getPos(i, width, height);
-    float a = map(pixel.x, 0, width, -3, 1);
-    float b = map(pixel.y, 0, width, -2, 2);
+    float a = map(pixel.x, 0, width, -3+dMouse_x/100, 1+dMouse_x/100);
+    float b = map(pixel.y, 0, height, -2+dMouse_y/100, 2+dMouse_y/100);
     
     ComplexNum c;
     c = new ComplexNum(a,b);
