@@ -9,7 +9,7 @@ float center_y = 0;
 float zoom = 2;
 
 void setup() {
-  size(300, 300);
+  size(500, 500);
   
 }
 
@@ -18,52 +18,33 @@ void draw() {
   last_time = millis();
   println("Time: " + time + " ms");
   
-  loadPixels();
-  //arrange the pixels
-  Point pixel;
-  pixel = new Point();
-  color pColor;
-  //println(dMouse_x);
-  //println(dMouse_y);
-  
   center_x = center_x + dMouse_x*zoom*2/width;
   center_y = center_y - dMouse_y*zoom*2/height;
   //println(center_x + " / " + center_y);
-
-  for (int i = 0; i < pixels.length; i++) {
-    pixel = getPos(i, width, height);
-   
-    float a = map(pixel.x, 0, width, center_x-zoom, center_x+zoom);
-    float b = map(pixel.y, 0, height, center_y+zoom, center_y-zoom);
-    
-    ComplexNum c;
-    c = new ComplexNum(a,b);
-    ComplexNum z;
-    z = new ComplexNum(0,0);
-    
-    // z(1) = z(0)² + c
-    
-    for (int j = 0; j < 100; j++) {
-      //real part a²-b²
-      float real = z.real * z.real - z.imag * z.imag + a;
-      //imaginary (2ab)i
-      float imag = 2 * z.real * z.imag + b;
-      z.real = real;
-      z.imag = imag;
-    }
-      //modulus
-      float modulus = sqrt(z.real*z.real + z.imag*z.imag);
-      
-      if (modulus < 100){
-        pColor = color(0);
-      }
-      else{
-        pColor = color(255);
-      }
-      
-      pixels[i] = pColor;
-  }
-
+  
+  loadPixels();
+  
+  Render r1 = new Render(0, 62500, width, height);
+  Render r2 = new Render(62500, 125000, width, height);
+  Render r3 = new Render(125000, 187500, width, height);
+  Render r4 = new Render(187500, 250000, width, height);
+  r1.start();
+  r2.start();
+  r3.start();
+  r4.start();
+  
+  try {r1.join();}
+  catch (InterruptedException e) {}
+  
+  try {r2.join();}
+  catch (InterruptedException e) {}
+  
+  try {r3.join();}
+  catch (InterruptedException e) {}
+  
+  try {r4.join();}
+  catch (InterruptedException e) {}
+  
   updatePixels();
   
   
@@ -107,7 +88,7 @@ class ComplexNum {
   }
 }
 
-Point getPos(int index, int _width, int _height) {
+Point getPos(int index, int _width) {
   Point p;
   p = new Point();
   p.y = index / _width;
@@ -129,5 +110,59 @@ void mouseWheel(MouseEvent event) {
     zoom = zoom*1.1;
   }else{
     zoom = zoom*0.9;
+  }
+}
+
+class Render extends Thread {
+  int origin;
+  int end;
+  int image_width;
+  int image_height;
+  Point pixel;
+  color pColor;
+  
+  Render(int origin, int end, int image_width, int image_height) {
+    this.origin = origin;
+    this.end = end;
+    this.image_width = image_width;
+    this.image_height = image_height;
+    pixel = new Point();
+  }
+  public void run() {
+    
+    for (int i = origin; i < end; i++) {
+      pixel = getPos(i, image_width);
+     
+      float a = map(pixel.x, 0, image_width, center_x-zoom, center_x+zoom);
+      float b = map(pixel.y, 0, image_height, center_y+zoom, center_y-zoom);
+      
+      //ComplexNum c;
+      //c = new ComplexNum(a,b);
+      ComplexNum z;
+      z = new ComplexNum(0,0);
+      
+      // z(1) = z(0)² + c
+      
+      for (int j = 0; j < 100; j++) {
+        //real part a²-b²
+        float real = z.real * z.real - z.imag * z.imag + a;
+        //imaginary (2ab)i
+        float imag = 2 * z.real * z.imag + b;
+        z.real = real;
+        z.imag = imag;
+      }
+      
+      //modulus
+      float modulus = sqrt(z.real*z.real + z.imag*z.imag);
+        
+      if (modulus < 100){
+        pColor = color(0);
+      }
+      else{
+        pColor = color(255);
+      }
+      
+      pixels[i] = pColor;
+    }
   }
 }
