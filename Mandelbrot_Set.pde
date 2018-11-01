@@ -1,21 +1,40 @@
-
+int lastMouse_x;
+int lastMouse_y;
+float dMouse_x = 0;
+float dMouse_y = 0;
+boolean last_pressed;
+long last_time = 0;
+float center_x = -0.7;
+float center_y = 0;
+float zoom = 2;
 
 void setup() {
-  size(800, 800);
+  size(300, 300);
   
 }
 
 void draw() {
+  long time = millis() - last_time;
+  last_time = millis();
+  println("Time: " + time + " ms");
+  
   loadPixels();
   //arrange the pixels
   Point pixel;
   pixel = new Point();
   color pColor;
+  println(dMouse_x);
+  println(dMouse_y);
+  
+  center_x = center_x + dMouse_x*zoom*2/width;
+  center_y = center_y - dMouse_y*zoom*2/height;
+  println(center_x + " / " + center_y);
 
   for (int i = 0; i < pixels.length; i++) {
     pixel = getPos(i, width, height);
-    float a = map(pixel.x, 0, width, -3, 1);
-    float b = map(pixel.y, 0, width, -2, 2);
+   
+    float a = map(pixel.x, 0, width, center_x-zoom, center_x+zoom);
+    float b = map(pixel.y, 0, height, center_y+zoom, center_y-zoom);
     
     ComplexNum c;
     c = new ComplexNum(a,b);
@@ -47,6 +66,22 @@ void draw() {
   }
 
   updatePixels();
+  
+  
+  //pan
+  if (mousePressed == true){
+    if (last_pressed == true){
+      dMouse_x = lastMouse_x - mouseX;
+      dMouse_y = lastMouse_y - mouseY;
+    }
+    lastMouse_x = mouseX;
+    lastMouse_y = mouseY;
+    last_pressed = true;
+  }else{
+    last_pressed = false;
+    dMouse_x = 0;
+    dMouse_y = 0;
+  }
 }
 
 class Point {
@@ -80,4 +115,20 @@ Point getPos(int index, int _width, int _height) {
   p.x = index % _width;
 
   return p;
+}
+
+void mousePressed(){
+  if (mouseButton == 39){
+    center_x = 0;
+    center_y = 0;
+  }
+}
+
+void mouseWheel(MouseEvent event) {
+  float e = event.getCount();
+  if (e > 0){
+    zoom = zoom*1.1;
+  }else{
+    zoom = zoom*0.9;
+  }
 }
