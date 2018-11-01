@@ -8,9 +8,11 @@ float center_x = -0.7;
 float center_y = 0;
 float zoom = 2;
 
+int px_thrad;
+
 void setup() {
-  size(500, 500);
-  
+  size(700, 700);
+  px_thrad = width * height / 4;
 }
 
 void draw() {
@@ -24,10 +26,10 @@ void draw() {
   
   loadPixels();
   
-  Render r1 = new Render(0, 62500, width, height);
-  Render r2 = new Render(62500, 125000, width, height);
-  Render r3 = new Render(125000, 187500, width, height);
-  Render r4 = new Render(187500, 250000, width, height);
+  Render r1 = new Render(0, px_thrad, width, height);
+  Render r2 = new Render(px_thrad, px_thrad*2, width, height);
+  Render r3 = new Render(px_thrad*2, px_thrad*3, width, height);
+  Render r4 = new Render(px_thrad*3, px_thrad*4, width, height);
   r1.start();
   r2.start();
   r3.start();
