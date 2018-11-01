@@ -9,7 +9,7 @@ float center_y = 0;
 float zoom = 2;
 
 void setup() {
-  size(700, 700);
+  size(300, 300);
   
 }
 
@@ -50,7 +50,7 @@ void draw() {
       float imag = 2 * z.real * z.imag + b;
       z.real = real;
       z.imag = imag;
-      
+    }
       //modulus
       float modulus = sqrt(z.real*z.real + z.imag*z.imag);
       
@@ -62,7 +62,6 @@ void draw() {
       }
       
       pixels[i] = pColor;
-    }
   }
 
   updatePixels();
