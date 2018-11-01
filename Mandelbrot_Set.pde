@@ -9,7 +9,7 @@ float center_y = 0;
 float zoom = 2;
 
 void setup() {
-  size(300, 300);
+  size(700, 700);
   
 }
 
@@ -23,12 +23,12 @@ void draw() {
   Point pixel;
   pixel = new Point();
   color pColor;
-  println(dMouse_x);
-  println(dMouse_y);
+  //println(dMouse_x);
+  //println(dMouse_y);
   
   center_x = center_x + dMouse_x*zoom*2/width;
   center_y = center_y - dMouse_y*zoom*2/height;
-  println(center_x + " / " + center_y);
+  //println(center_x + " / " + center_y);
 
   for (int i = 0; i < pixels.length; i++) {
     pixel = getPos(i, width, height);
