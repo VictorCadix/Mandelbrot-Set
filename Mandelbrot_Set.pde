@@ -12,6 +12,7 @@ int iterations = 100;
 int px_thrad;
 
 Button button_increaseIterations;
+Button button_decreaseIterations;
 
 void setup() {
   size(700, 700);
@@ -20,6 +21,10 @@ void setup() {
   button_increaseIterations = new Button (20, height-50, 25, 25);
   button_increaseIterations.setColor(200,200,200);
   button_increaseIterations.setName("+");
+  
+  button_decreaseIterations = new Button (20, height-20, 25, 25);
+  button_decreaseIterations.setColor(200,200,200);
+  button_decreaseIterations.setName("-");
 }
 
 void draw() {
@@ -58,6 +63,7 @@ void draw() {
   
   //Interface
   button_increaseIterations.draw();
+  button_decreaseIterations.draw();
   
   //pan
   if (mousePressed == true){
@@ -115,6 +121,9 @@ void mousePressed(){
   }
   if (button_increaseIterations.isPressed()){
     iterations += 10;
+  }
+  else if (button_decreaseIterations.isPressed()){
+    iterations -= 10;
   }
 }
 
