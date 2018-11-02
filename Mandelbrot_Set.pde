@@ -10,9 +10,15 @@ float zoom = 2;
 
 int px_thrad;
 
+Button button_increaseIterations;
+
 void setup() {
   size(700, 700);
   px_thrad = width * height / 4;
+  
+  button_increaseIterations = new Button (20, height-50, 25, 25);
+  button_increaseIterations.setColor(200,200,200);
+  button_increaseIterations.setName("+");
 }
 
 void draw() {
@@ -49,6 +55,8 @@ void draw() {
   
   updatePixels();
   
+  //Interface
+  button_increaseIterations.draw();
   
   //pan
   if (mousePressed == true){
@@ -103,6 +111,9 @@ void mousePressed(){
   if (mouseButton == 39){
     center_x = 0;
     center_y = 0;
+  }
+  if (button_increaseIterations.isPressed()){
+    
   }
 }
 
