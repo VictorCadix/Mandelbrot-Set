@@ -7,6 +7,7 @@ long last_time = 0;
 float center_x = -0.7;
 float center_y = 0;
 float zoom = 2;
+int iterations = 100;
 
 int px_thrad;
 
@@ -113,7 +114,7 @@ void mousePressed(){
     center_y = 0;
   }
   if (button_increaseIterations.isPressed()){
-    
+    iterations += 10;
   }
 }
 
