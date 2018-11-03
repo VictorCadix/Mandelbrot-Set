@@ -32,10 +32,6 @@ void draw() {
   last_time = millis();
   println("Time: " + time + " ms");
   
-  center_x = center_x + dMouse_x*zoom*2/width;
-  center_y = center_y - dMouse_y*zoom*2/height;
-  //println(center_x + " / " + center_y);
-  
   loadPixels();
   
   Render r1 = new Render(0, px_thrad, width, height);
@@ -70,14 +66,14 @@ void draw() {
     if (last_pressed == true){
       dMouse_x = lastMouse_x - mouseX;
       dMouse_y = lastMouse_y - mouseY;
+      center_x = center_x + dMouse_x*zoom*2/width;
+      center_y = center_y - dMouse_y*zoom*2/height;
     }
     lastMouse_x = mouseX;
     lastMouse_y = mouseY;
     last_pressed = true;
   }else{
     last_pressed = false;
-    dMouse_x = 0;
-    dMouse_y = 0;
   }
 }
 
