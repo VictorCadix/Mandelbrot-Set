@@ -7,22 +7,30 @@ long last_time = 0;
 float center_x = -0.7;
 float center_y = 0;
 float zoom = 2;
+int iterations = 100;
 
 int px_thrad;
+
+Button button_increaseIterations;
+Button button_decreaseIterations;
 
 void setup() {
   size(700, 700);
   px_thrad = width * height / 4;
+  
+  button_increaseIterations = new Button (20, height-50, 25, 25);
+  button_increaseIterations.setColor(200,200,200);
+  button_increaseIterations.setName("+");
+  
+  button_decreaseIterations = new Button (20, height-20, 25, 25);
+  button_decreaseIterations.setColor(200,200,200);
+  button_decreaseIterations.setName("-");
 }
 
 void draw() {
   long time = millis() - last_time;
   last_time = millis();
   println("Time: " + time + " ms");
-  
-  center_x = center_x + dMouse_x*zoom*2/width;
-  center_y = center_y - dMouse_y*zoom*2/height;
-  //println(center_x + " / " + center_y);
   
   loadPixels();
   
@@ -49,20 +57,23 @@ void draw() {
   
   updatePixels();
   
+  //Interface
+  button_increaseIterations.draw();
+  button_decreaseIterations.draw();
   
   //pan
   if (mousePressed == true){
     if (last_pressed == true){
       dMouse_x = lastMouse_x - mouseX;
       dMouse_y = lastMouse_y - mouseY;
+      center_x = center_x + dMouse_x*zoom*2/width;
+      center_y = center_y - dMouse_y*zoom*2/height;
     }
     lastMouse_x = mouseX;
     lastMouse_y = mouseY;
     last_pressed = true;
   }else{
     last_pressed = false;
-    dMouse_x = 0;
-    dMouse_y = 0;
   }
 }
 
@@ -104,13 +115,33 @@ void mousePressed(){
     center_x = 0;
     center_y = 0;
   }
+  if (button_increaseIterations.isPressed()){
+    iterations += 10;
+  }
+  else if (button_decreaseIterations.isPressed()){
+    iterations -= 10;
+  }
 }
 
 void mouseWheel(MouseEvent event) {
   float e = event.getCount();
   if (e > 0){
+    //Zoom out
+    println(mouseX + "," + mouseY);
+    float aux = mouseX-(mouseX-width/2)*1.1;
+    println(aux);
+    center_x = map(aux, 0, width, center_x-zoom, center_x+zoom);
+    aux = mouseY-(mouseY-height/2)*1.1;
+    center_y = map(aux, 0, height, center_y+zoom, center_y-zoom);
     zoom = zoom*1.1;
   }else{
+    //Zoom in
+    println(mouseX + "," + mouseY);
+    float aux = mouseX-(mouseX-width/2)*0.9;
+    println(aux);
+    center_x = map(aux, 0, width, center_x-zoom, center_x+zoom);
+    aux = mouseY-(mouseY-height/2)*0.9;
+    center_y = map(aux, 0, height, center_y+zoom, center_y-zoom);
     zoom = zoom*0.9;
   }
 }

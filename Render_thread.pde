@@ -28,7 +28,7 @@ class Render extends Thread {
       
       // z(1) = z(0)² + c
       
-      for (int j = 0; j < 100; j++) {
+      for (int j = 0; j < iterations; j++) {
         //real part a²-b²
         float real = z.real * z.real - z.imag * z.imag + a;
         //imaginary (2ab)i
