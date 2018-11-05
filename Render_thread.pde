@@ -26,20 +26,19 @@ class Render extends Thread {
       ComplexNum z;
       z = new ComplexNum(0,0);
       
-      // z(1) = z(0)² + c
+      float modulus = 0;
       
-      for (int j = 0; j < iterations; j++) {
+      // z(1) = z(0)² + c
+      for (int j = 0; j < iterations && modulus < 4; j++) {
         //real part a²-b²
         float real = z.real * z.real - z.imag * z.imag + a;
         //imaginary (2ab)i
         float imag = 2 * z.real * z.imag + b;
         z.real = real;
         z.imag = imag;
+        
+        modulus = z.real*z.real + z.imag*z.imag;
       }
-      
-      //modulus
-      float modulus = z.real*z.real + z.imag*z.imag;
-      //float modulus = z.real + z.imag;
         
       if (modulus < 4){
         pColor = color(0);
