@@ -127,18 +127,14 @@ void mouseWheel(MouseEvent event) {
   float e = event.getCount();
   if (e > 0){
     //Zoom out
-    println(mouseX + "," + mouseY);
     float aux = mouseX-(mouseX-width/2)*1.1;
-    println(aux);
     center_x = map(aux, 0, width, center_x-zoom, center_x+zoom);
     aux = mouseY-(mouseY-height/2)*1.1;
     center_y = map(aux, 0, height, center_y+zoom, center_y-zoom);
     zoom = zoom*1.1;
   }else{
     //Zoom in
-    println(mouseX + "," + mouseY);
     float aux = mouseX-(mouseX-width/2)*0.9;
-    println(aux);
     center_x = map(aux, 0, width, center_x-zoom, center_x+zoom);
     aux = mouseY-(mouseY-height/2)*0.9;
     center_y = map(aux, 0, height, center_y+zoom, center_y-zoom);
