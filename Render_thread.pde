@@ -38,10 +38,10 @@ class Render extends Thread {
       }
       
       //modulus
-      float modulus = sqrt(z.real*z.real + z.imag*z.imag);
+      float modulus = z.real*z.real + z.imag*z.imag;
       //float modulus = z.real + z.imag;
         
-      if (modulus < 100){
+      if (modulus < 4){
         pColor = color(0);
       }
       else{
