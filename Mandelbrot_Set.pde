@@ -3,13 +3,13 @@ int lastMouse_y;
 float dMouse_x = 0;
 float dMouse_y = 0;
 boolean last_pressed;
-long last_time = 0;
+int last_time = 0;
 float center_x = -0.7;
-float center_y = 0;
-float zoom = 2;
+float center_y = 1;
+float zoom = 1;
 int iterations = 100;
 
-long renderTime = 0;
+int renderTime = 0;
 int px_thrad;
 
 Button button_increaseIterations;
@@ -78,7 +78,7 @@ void draw() {
     last_pressed = false;
   }
   
-  long time = millis() - last_time;
+  int time = millis() - last_time;
   last_time = millis();
   println(" # " + time);
 }
