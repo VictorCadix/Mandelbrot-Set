@@ -14,7 +14,7 @@ class Render extends Thread {
     pixel = new Point();
   }
   public void run() {
-    
+    long start = millis();
     for (int i = origin; i < end; i++) {
       pixel = getPos(i, image_width);
      
@@ -49,5 +49,6 @@ class Render extends Thread {
       
       pixels[i] = pColor;
     }
+    print(" " + (millis() - start));
   }
 }

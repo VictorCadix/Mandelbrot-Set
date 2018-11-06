@@ -9,6 +9,7 @@ float center_y = 0;
 float zoom = 2;
 int iterations = 100;
 
+long renderTime = 0;
 int px_thrad;
 
 Button button_increaseIterations;
@@ -28,11 +29,10 @@ void setup() {
 }
 
 void draw() {
-  long time = millis() - last_time;
-  last_time = millis();
-  println("Time: " + time + " ms");
+  
   
   loadPixels();
+  renderTime = millis();
   
   Render r1 = new Render(0, px_thrad, width, height);
   Render r2 = new Render(px_thrad, px_thrad*2, width, height);
@@ -55,6 +55,8 @@ void draw() {
   try {r4.join();}
   catch (InterruptedException e) {}
   
+  print(" / " + (millis() - renderTime));
+  
   updatePixels();
   
   //Interface
@@ -75,6 +77,10 @@ void draw() {
   }else{
     last_pressed = false;
   }
+  
+  long time = millis() - last_time;
+  last_time = millis();
+  println(" # " + time);
 }
 
 class Point {
