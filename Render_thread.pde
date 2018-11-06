@@ -1,4 +1,5 @@
 class Render extends Thread {
+  int threadNum;
   int origin;
   int end;
   int image_width;
@@ -6,7 +7,8 @@ class Render extends Thread {
   Point pixel;
   color pColor;
   
-  Render(int origin, int end, int image_width, int image_height) {
+  Render(int threadNumber, int origin, int end, int image_width, int image_height) {
+    this.threadNum = threadNumber;
     this.origin = origin;
     this.end = end;
     this.image_width = image_width;
@@ -14,7 +16,7 @@ class Render extends Thread {
     pixel = new Point();
   }
   public void run() {
-    int start = millis();
+    //int start = millis();
     for (int i = origin; i < end; i++) {
       pixel = getPos(i, image_width);
      
@@ -49,7 +51,7 @@ class Render extends Thread {
       
       pixels[i] = pColor;
     }
-    int end = millis();
-    print(" " + (end - start));
+    //int end = millis();
+    //print(" * R"+ threadNum + " " + (end - start));
   }
 }
