@@ -11,13 +11,17 @@ int iterations = 100;
 
 int renderTime = 0;
 int px_thrad;
+int nThreads = 16;
+
+Render[] render;
 
 Button button_increaseIterations;
 Button button_decreaseIterations;
 
 void setup() {
   size(700, 700);
-  px_thrad = width * height / 16;
+  px_thrad = width * height / nThreads;
+  render = new Render[nThreads];
   
   button_increaseIterations = new Button (20, height-50, 25, 25);
   button_increaseIterations.setColor(200,200,200);
@@ -26,80 +30,28 @@ void setup() {
   button_decreaseIterations = new Button (20, height-20, 25, 25);
   button_decreaseIterations.setColor(200,200,200);
   button_decreaseIterations.setName("-");
+  
 }
 
 void draw() {
   
-  
   loadPixels();
   renderTime = millis();
   
-  Render r1 = new Render(1, 0, px_thrad, width, height);
-  Render r2 = new Render(2, px_thrad, px_thrad*2, width, height);
-  Render r3 = new Render(3, px_thrad*2, px_thrad*3, width, height);
-  Render r4 = new Render(4, px_thrad*3, px_thrad*4, width, height);
-  Render r5 = new Render(5, px_thrad*4, px_thrad*5, width, height);
-  Render r6 = new Render(6, px_thrad*5, px_thrad*6, width, height);
-  Render r7 = new Render(7, px_thrad*6, px_thrad*7, width, height);
-  Render r8 = new Render(8, px_thrad*7, px_thrad*8, width, height);
-  Render r9 = new Render(9, px_thrad*8, px_thrad*9, width, height);
-  Render r10 = new Render(10, px_thrad*9, px_thrad*10, width, height);
-  Render r11 = new Render(11, px_thrad*10, px_thrad*11, width, height);
-  Render r12 = new Render(12, px_thrad*11, px_thrad*12, width, height);
-  Render r13 = new Render(13, px_thrad*12, px_thrad*13, width, height);
-  Render r14 = new Render(14, px_thrad*13, px_thrad*14, width, height);
-  Render r15 = new Render(15, px_thrad*14, px_thrad*15, width, height);
-  Render r16 = new Render(16, px_thrad*15, px_thrad*16, width, height);
+  for (int i = 0; i< nThreads; i++){
+    render[i] = new Render(i+1, px_thrad*i, px_thrad*(i+1), width, height);
+  }
   
-  r1.start();
-  r2.start();
-  r3.start();
-  r4.start();
-  r5.start();
-  r6.start();
-  r7.start();
-  r8.start();
-  r9.start();
-  r10.start();
-  r11.start();
-  r12.start();
-  r13.start();
-  r14.start();
-  r15.start();
-  r16.start();
+  for (int i = 0; i< nThreads; i++){
+    render[i].start();
+  }
   
-  try {r1.join();}
-  catch (InterruptedException e) {}
-  try {r2.join();}
-  catch (InterruptedException e) {}
-  try {r3.join();}
-  catch (InterruptedException e) {}
-  try {r4.join();}
-  catch (InterruptedException e) {}
-  try {r5.join();}
-  catch (InterruptedException e) {}
-  try {r6.join();}
-  catch (InterruptedException e) {}
-  try {r7.join();}
-  catch (InterruptedException e) {}
-  try {r8.join();}
-  catch (InterruptedException e) {}
-  try {r9.join();}
-  catch (InterruptedException e) {}
-  try {r10.join();}
-  catch (InterruptedException e) {}
-  try {r11.join();}
-  catch (InterruptedException e) {}
-  try {r12.join();}
-  catch (InterruptedException e) {}
-  try {r13.join();}
-  catch (InterruptedException e) {}
-  try {r14.join();}
-  catch (InterruptedException e) {}
-  try {r15.join();}
-  catch (InterruptedException e) {}
-  try {r16.join();}
-  catch (InterruptedException e) {}
+  for (int i = 0; i< nThreads; i++){
+    try {
+      render[i].join();
+    }
+    catch (InterruptedException e) {}
+  }
   
   print(" / " + (millis() - renderTime));
   
