@@ -29,9 +29,9 @@ class Render extends Thread {
       z = new ComplexNum(0,0);
       
       float modulus = 0;
-      
+      int iterations;
       // z(1) = z(0)² + c
-      for (int j = 0; j < iterations && modulus < 4; j++) {
+      for (iterations = 0; iterations < max_iterations && modulus < 4; iterations++) {
         //real part a²-b²
         float real = z.real * z.real - z.imag * z.imag + a;
         //imaginary (2ab)i
@@ -46,7 +46,7 @@ class Render extends Thread {
         pColor = color(0);
       }
       else{
-        pColor = color(255);
+        pColor = color(iterations);
       }
       
       pixels[i] = pColor;

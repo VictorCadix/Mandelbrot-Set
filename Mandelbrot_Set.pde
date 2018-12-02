@@ -7,7 +7,7 @@ int last_time = 0;
 float center_x = -0.7;
 float center_y = 1;
 float zoom = 1;
-int iterations = 100;
+int max_iterations = 100;
 
 int renderTime = 0;
 int px_thrad;
@@ -79,6 +79,7 @@ void draw() {
   int time = millis() - last_time;
   last_time = millis();
   println(" # " + time);
+  println(center_x + "/" + center_y + "/" + zoom);
 }
 
 class Point {
@@ -120,10 +121,10 @@ void mousePressed(){
     center_y = 0;
   }
   if (button_increaseIterations.isPressed()){
-    iterations += 10;
+    max_iterations += 10;
   }
   else if (button_decreaseIterations.isPressed()){
-    iterations -= 10;
+    max_iterations -= 10;
   }
 }
 
