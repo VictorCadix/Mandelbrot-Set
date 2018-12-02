@@ -3,20 +3,25 @@ int lastMouse_y;
 float dMouse_x = 0;
 float dMouse_y = 0;
 boolean last_pressed;
-long last_time = 0;
+int last_time = 0;
 float center_x = -0.7;
-float center_y = 0;
-float zoom = 2;
+float center_y = 1;
+float zoom = 1;
 int iterations = 100;
 
+int renderTime = 0;
 int px_thrad;
+int nThreads = 16;
+
+Render[] render;
 
 Button button_increaseIterations;
 Button button_decreaseIterations;
 
 void setup() {
   size(700, 700);
-  px_thrad = width * height / 4;
+  px_thrad = width * height / nThreads;
+  render = new Render[nThreads];
   
   button_increaseIterations = new Button (20, height-50, 25, 25);
   button_increaseIterations.setColor(200,200,200);
@@ -25,35 +30,30 @@ void setup() {
   button_decreaseIterations = new Button (20, height-20, 25, 25);
   button_decreaseIterations.setColor(200,200,200);
   button_decreaseIterations.setName("-");
+  
 }
 
 void draw() {
-  long time = millis() - last_time;
-  last_time = millis();
-  println("Time: " + time + " ms");
   
   loadPixels();
+  renderTime = millis();
   
-  Render r1 = new Render(0, px_thrad, width, height);
-  Render r2 = new Render(px_thrad, px_thrad*2, width, height);
-  Render r3 = new Render(px_thrad*2, px_thrad*3, width, height);
-  Render r4 = new Render(px_thrad*3, px_thrad*4, width, height);
-  r1.start();
-  r2.start();
-  r3.start();
-  r4.start();
+  for (int i = 0; i< nThreads; i++){
+    render[i] = new Render(i+1, px_thrad*i, px_thrad*(i+1), width, height);
+  }
   
-  try {r1.join();}
-  catch (InterruptedException e) {}
+  for (int i = 0; i< nThreads; i++){
+    render[i].start();
+  }
   
-  try {r2.join();}
-  catch (InterruptedException e) {}
+  for (int i = 0; i< nThreads; i++){
+    try {
+      render[i].join();
+    }
+    catch (InterruptedException e) {}
+  }
   
-  try {r3.join();}
-  catch (InterruptedException e) {}
-  
-  try {r4.join();}
-  catch (InterruptedException e) {}
+  print(" / " + (millis() - renderTime));
   
   updatePixels();
   
@@ -75,6 +75,10 @@ void draw() {
   }else{
     last_pressed = false;
   }
+  
+  int time = millis() - last_time;
+  last_time = millis();
+  println(" # " + time);
 }
 
 class Point {
