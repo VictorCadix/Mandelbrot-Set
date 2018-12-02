@@ -4,9 +4,9 @@ float dMouse_x = 0;
 float dMouse_y = 0;
 boolean last_pressed;
 int last_time = 0;
-float center_x = -0.77462083;
-float center_y = 0.13486421;
-float zoom = 1.6819963E-6;
+double center_x = -0.77462083;
+double center_y = 0.13486421;
+double zoom = 1.6819963E-6;
 int max_iterations = 100;
 
 int renderTime = 0;
@@ -88,10 +88,10 @@ class Point {
 }
 
 class ComplexNum {
-  float real;
-  float imag;
+  double real;
+  double imag;
   
-  ComplexNum(float r, float i){
+  ComplexNum(double r, double i){
     this.real = r;
     this.imag = i;
   }
@@ -100,9 +100,9 @@ class ComplexNum {
     this.real = c.real;
     this.imag = c.imag;
   }
-  float modulus(){
-    float mod = sqrt(real*real + imag*imag);
-    return mod;
+  double modulus(){
+    float mod = sqrt((float)(real*real + imag*imag));
+    return (double)mod;
   }
 }
 
@@ -139,16 +139,16 @@ void mouseWheel(MouseEvent event) {
   if (e > 0){
     //Zoom out
     float aux = mouseX-(mouseX-width/2)*1.1;
-    center_x = map(aux, 0, width, center_x-zoom, center_x+zoom);
+    center_x = reMap(aux, 0, width, center_x-zoom, center_x+zoom);
     aux = mouseY-(mouseY-height/2)*1.1;
-    center_y = map(aux, 0, height, center_y+zoom, center_y-zoom);
+    center_y = reMap(aux, 0, height, center_y+zoom, center_y-zoom);
     zoom = zoom*1.1;
   }else{
     //Zoom in
     float aux = mouseX-(mouseX-width/2)*0.9;
-    center_x = map(aux, 0, width, center_x-zoom, center_x+zoom);
+    center_x = reMap(aux, 0, width, center_x-zoom, center_x+zoom);
     aux = mouseY-(mouseY-height/2)*0.9;
-    center_y = map(aux, 0, height, center_y+zoom, center_y-zoom);
+    center_y = reMap(aux, 0, height, center_y+zoom, center_y-zoom);
     zoom = zoom*0.9;
   }
 }

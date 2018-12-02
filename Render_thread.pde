@@ -20,22 +20,22 @@ class Render extends Thread {
     for (int i = origin; i < end; i++) {
       pixel = getPos(i, image_width);
      
-      float a = map(pixel.x, 0, image_width, center_x-zoom, center_x+zoom);
-      float b = map(pixel.y, 0, image_height, center_y+zoom, center_y-zoom);
+      double a = reMap(pixel.x, 0, image_width, center_x-zoom, center_x+zoom);
+      double b = reMap(pixel.y, 0, image_height, center_y+zoom, center_y-zoom);
       
       //ComplexNum c;
       //c = new ComplexNum(a,b);
       ComplexNum z;
       z = new ComplexNum(0,0);
       
-      float modulus = 0;
+      double modulus = 0;
       int iterations;
       // z(1) = z(0)² + c
       for (iterations = 0; iterations < max_iterations && modulus < 4; iterations++) {
         //real part a²-b²
-        float real = z.real * z.real - z.imag * z.imag + a;
+        double real = z.real * z.real - z.imag * z.imag + a;
         //imaginary (2ab)i
-        float imag = 2 * z.real * z.imag + b;
+        double imag = 2 * z.real * z.imag + b;
         z.real = real;
         z.imag = imag;
         
