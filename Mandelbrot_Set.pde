@@ -4,9 +4,9 @@ float dMouse_x = 0;
 float dMouse_y = 0;
 boolean last_pressed;
 int last_time = 0;
-float center_x = -0.7;
-float center_y = 1;
-float zoom = 1;
+float center_x = -0.77462083;
+float center_y = 0.13486421;
+float zoom = 1.6819963E-6;
 int max_iterations = 100;
 
 int renderTime = 0;
