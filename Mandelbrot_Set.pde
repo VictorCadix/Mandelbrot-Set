@@ -115,6 +115,12 @@ Point getPos(int index, int _width) {
   return p;
 }
 
+double reMap(double value, double inf1, double sup1, double inf2, double sup2){
+  double pendiente = (sup2 - inf2) / (sup1 - inf1);
+  double origen = -inf1 * pendiente + inf2;
+  return origen + value * pendiente;
+}
+
 void mousePressed(){
   if (mouseButton == 39){
     center_x = 0;
