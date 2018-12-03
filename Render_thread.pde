@@ -41,12 +41,12 @@ class Render extends Thread {
         
         modulus = z.real*z.real + z.imag*z.imag;
       }
-        
+      float aux = map(iterations, 0, max_iterations, 0, 250);
       if (modulus < 4){
         pColor = color(0);
       }
       else{
-        pColor = color(iterations);
+        pColor = color(255-aux);
       }
       
       pixels[i] = pColor;

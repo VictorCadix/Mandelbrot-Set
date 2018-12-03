@@ -36,7 +36,7 @@ void setup() {
 void draw() {
   
   loadPixels();
-  renderTime = millis();
+  //renderTime = millis();
   
   for (int i = 0; i< nThreads; i++){
     render[i] = new Render(i+1, px_thrad*i, px_thrad*(i+1), width, height);
@@ -53,7 +53,7 @@ void draw() {
     catch (InterruptedException e) {}
   }
   
-  print(" / " + (millis() - renderTime));
+  //print(" / " + (millis() - renderTime));
   
   updatePixels();
   
@@ -76,10 +76,11 @@ void draw() {
     last_pressed = false;
   }
   
-  int time = millis() - last_time;
-  last_time = millis();
-  println(" # " + time);
+  //int time = millis() - last_time;
+  //last_time = millis();
+  //println(" # " + time);
   println(center_x + "/" + center_y + "/" + zoom);
+  println(max_iterations);
 }
 
 class Point {
