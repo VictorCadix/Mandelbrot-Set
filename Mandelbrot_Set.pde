@@ -4,10 +4,10 @@ float dMouse_x = 0;
 float dMouse_y = 0;
 boolean last_pressed;
 int last_time = 0;
-double center_x = -0.77462083;
-double center_y = 0.13486421;
-double zoom = 1.6819963E-6;
-int max_iterations = 100;
+double center_x = -0.6;    //-0.77462083;
+double center_y = 0;    //0.13486421;
+double zoom = 1.6;        //1.6819963E-6;
+int max_iterations = 200;
 
 int renderTime = 0;
 int px_thrad;
@@ -152,4 +152,6 @@ void mouseWheel(MouseEvent event) {
     center_y = reMap(aux, 0, height, center_y+zoom, center_y-zoom);
     zoom = zoom*0.9;
   }
+  float ln_zoom = log((float)(zoom));
+  max_iterations = (int) (-38.76*ln_zoom+221);
 }
